@@ -1,0 +1,22 @@
+name: Checkout Repository
+
+# Defines when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the main branch
+  push:
+    branches: [ main ]
+  # Also triggers on pull requests to the main branch
+  pull_request:
+    branches: [ main ]
+
+# Defines the job to be executed
+jobs:
+  checkout_code:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Uses the checkout action to clone the repository
+    - name: Checkout
+      uses: actions/checkout@v3
