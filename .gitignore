@@ -1,0 +1,22 @@
+# Ignore executable files
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore compiled object files
+*.o
+*.obj
+*.class
+*.pyc
+
+# Ignore Excel files
+*.xls
+*.xlsx
+*.xlsm
+
+# Ignore log files
+*.log
+
+# Ignore directory node_modules
+node_modules/
