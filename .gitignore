@@ -27,3 +27,5 @@ node_modules/
 
 # Ignore zip files
 *.zip
+# Ignore json files
+.json
