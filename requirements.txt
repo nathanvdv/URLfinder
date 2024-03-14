@@ -4,3 +4,5 @@ pandas
 pyarrow
 matplotlib
 seaborn
+beautifulsoup4
+requests
