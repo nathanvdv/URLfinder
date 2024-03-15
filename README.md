@@ -32,4 +32,6 @@ Based on the heatmap, we decide to drop the columns that occur infrequently.
 In the section "Visualizing duplicate entries in rows," we identify duplicate URLs. The existence of 741 duplicate entries may not necessarily indicate an issue. It's possible that different subsidiaries are referring to the same website.
 
 Lastly we save the combined dataset as a parquet file and as a csv. 
+
+Lastly we look at some statistics for our complete dataset, such as missing data (heatmap) and top 10 municipalities (barplot). Lastly we save this dataset as a csv as well. 
 4. DataPreperation.ipynb
