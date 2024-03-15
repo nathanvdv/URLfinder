@@ -22,5 +22,14 @@ In the first part "Load Parquet Files into DataFrames," the directory is first s
 In the second step, named "Filtered Dataframe," the dataframes are filtered based on the specific needs of the user. We start with the "denomination" dataframe. Here, the choice is made to filter only the companies that specify at least a Dutch-language name (Language == 2). We then split the "TypeOfDenomination" into "Officialname," "Abbreviation", and "TradeName". These designations correspond to when TypeOfDenomination takes on the values 1, 2, or 3. Next, we do the same in the "address" dataframe for Dutch zip codes, municipalities, street names, and house numbers. Finally, the emails, phone numbers, and URLs in the "contact" dataframe are renamed.
 In the final lines of code, the filtered dataframes are combined. This combined dataframe is then merged using the primary key "EntityNumber," as this is the only column present in each dataframe, and is unique for every company. Finally, "EntityNumber" is set as the index and displayed to the user so they can verify whether the dataframes have been correctly combined.
 
+In "Filtering" we filter out the rows where no CountryNL is found. In "Filtering on URL" we create a parquet file only containing rows that contain a URL. We safe this dataframe with URLs to potentially use as a training set for our Machine Learning model later on. To be sure we have one entry per company, we lastly delete all duplicates by keeping the first row of each EntityNumber. 
 
-4. DataPreperation
+In df_final.info we take a look at the attributes of our final URL dataframe. We also print out the first 50 instances to take a closer see what the dataframe looks like. 
+
+In "Analyse and visualize the final URL dataframe" we take a closer look into the statistics of our URL dataframe. First we print out some numerical statistics such as 'count' and 'unique'. Next, we  examine numerically the top 5 municipalities where the companies (with a filled URL) are located, after which we create a bar plot of the top 10 municipalities and a heatmap to visualize the missing data. Note that these numbers are solely for the dataframe made out of instances with a URL.
+Based on the heatmap, we decide to drop the columns that occur infrequently. 
+
+In the section "Visualizing duplicate entries in rows," we identify duplicate URLs. The existence of 741 duplicate entries may not necessarily indicate an issue. It's possible that different subsidiaries are referring to the same website.
+
+Lastly we save the combined dataset as a parquet file and as a csv. 
+4. DataPreperation.ipynb
