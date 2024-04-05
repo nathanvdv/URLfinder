@@ -29,3 +29,5 @@ node_modules/
 *.zip
 # Ignore json files
 *.json
+# Ignore last_processed_entity.txt
+last_processed_entity.txt
