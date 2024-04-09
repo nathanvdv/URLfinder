@@ -31,3 +31,5 @@ node_modules/
 *.json
 # Ignore last_processed_entity.txt
 last_processed_entity.txt
+#ignore .png
+*.png
