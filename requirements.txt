@@ -11,3 +11,10 @@ ratelimit
 scikit-learn
 keras
 tensorflow
+transformers
+torch
+numpy
+tokenizers
+torchaudio
+torchvision
+tqdm
