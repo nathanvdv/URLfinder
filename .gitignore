@@ -33,3 +33,5 @@ node_modules/
 last_processed_entity.txt
 #ignore .png
 *.png
+#ignore .npy
+*.npy
