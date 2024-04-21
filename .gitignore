@@ -35,3 +35,5 @@ last_processed_entity.txt
 *.png
 #ignore .npy
 *.npy
+
+URLBERT-master

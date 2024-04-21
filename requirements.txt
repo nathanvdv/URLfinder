@@ -18,3 +18,8 @@ tokenizers
 torchaudio
 torchvision
 tqdm
+shap
+keras
+iterative-stratification
+pandarallel
+python-Levenshtein
