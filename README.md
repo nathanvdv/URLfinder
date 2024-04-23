@@ -116,7 +116,7 @@ This repository is structured to include a series of Jupyter notebooks and a Pyt
 #### 6. `Prediction_pipeline.py`
 - **Description**:  Serves as a pipeline for making predictions with the trained models.
 - **Instructions**: Run this script with Python 3.x. Ensure all dependencies are installed. Load the trained model before making predictions.
-- **Output**: This script can be integrated into a production environment for real-time predictions.
+- **Output**: The output is a .parquet file with the predicted URLs and their domains. It can contain multiple different URLs. This script can be integrated into a production environment for real-time predictions.
 
 ## License
 
