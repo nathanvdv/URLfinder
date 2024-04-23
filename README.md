@@ -1,38 +1,124 @@
-# URLfinder
-This document contains explanations and instructions about the URL Finder Tool. For each application, it is explained what it does and how to use it.
+# KBO URL Linking Model Development
 
-1. ZipDownloader.ipynb
-The ZipDownloader file is the first file needed to start. After installing the necessary packages (downloading dependencies), a dataset from the KBO is downloaded via the "Automatic Zip Downloader". 
+Welcome to the official repository for the master thesis from KU Leuven in cooperation with Statistiek Vlaanderen. This project focuses on developing a machine learning model to accurately link businesses from the KBO (Crossroads Bank for Enterprises) database to their true URLs. The work presented here is part of an academic thesis and represents a collaborative effort between the university and the official statistics agency of the Flemish Region in Belgium.
 
-In this file, web scraping is done via selenium, first, a Chrome driver is installed and set up in setup_driver(). The second function, wait_for_download_completion(), ensures that the driver waits for the download of the requested zip folder. The timer is currently set to 1000 seconds, meaning the driver will give an error message if the download is not completed after 1000 seconds. Of course, this timeout can be adjusted.
-In the login(driver) function, the driver navigates to the KBO website and fills in the user's login credentials. For privacy purposes, these credentials have been replaced with #'s here. The user of the tool can create an account on the site themselves and fill in their details here.
+## Project Overview
 
-In the navigate_and_download() function, the driver navigates to the right link on the website. Once the driver arrives on the intended site, it searches for the KboOpenData_Full.zip. By adding latest_date = max(file_dates.keys()) and latest_file_url = file_dates[latest_date], we make sure that the most recent zip folder is downloaded.
+This repository contains a series of Jupyter notebooks and a Python script that make up a data processing and machine learning prediction pipeline. The functions for both Jupyter notebooks and the Python script are combined in individual python scripts in the folder 'Library'. Each component of the pipeline corresponds to a step in the process of collecting, processing, visualizing, and predicting business URLs based on KBO data.
 
-2. ZipFileReader.ipynb
-In the second application, the zip folder is unpacked and read. The first function ensures that we always use the latest downloaded zip folder. 
-The second function, namely extract_and_convert_to_parquet(), ensures that the zip folder is first unpacked (extractall) and then read (df = pd.read_csv(csv_file_path)). In the next step, problematic columns (here 'Zipcode') are converted to correct types (here string). Then, these dataframes are converted to parquet files (to_parquet) to use less memory.
-In the main processing logic, we specify how the directories are named and ensure that the function ends with a completed update ("Update completed.") or with the message that there is no new zip file that needs to be processed.
+## Workflow Visualization
 
-3. DataSetCreator.ipnyb
-In DataSetCreator, the parquet files are read and converted into dataframes. Then, these dataframes are linked and filtered. 
+A BPMN (Business Process Model and Notation) diagram is included to outline the process flow, ensuring clarity and coherence in the methodology used throughout this project.
 
-In the first part "Load Parquet Files into DataFrames," the directory is first set to ExtractedFiles, after which all parquet files are placed in a dictionary. To check how these dataframes currently appear, each dataframe is iterated over to show information (df.info) and print the first few rows (df.head).
+![BPMN Model Overview](diagram_methodology.png)
 
-In the second step, named "Filtered Dataframe," the dataframes are filtered based on the specific needs of the user. We start with the "denomination" dataframe. Here, the choice is made to filter only the companies that specify at least a Dutch-language name (Language == 2). We then split the "TypeOfDenomination" into "Officialname," "Abbreviation", and "TradeName". These designations correspond to when TypeOfDenomination takes on the values 1, 2, or 3. Next, we do the same in the "address" dataframe for Dutch zip codes, municipalities, street names, and house numbers. Finally, the emails, phone numbers, and URLs in the "contact" dataframe are renamed.
-In the final lines of code, the filtered dataframes are combined. Lastly, we add the NACE codes for further analysis, we rename them in the dataframe as "ActivityNACE". This combined dataframe is then merged using the primary key "EntityNumber," as this is the only column present in each dataframe, and is unique for every company. Finally, "EntityNumber" is set as the index and displayed to the user so they can verify whether the dataframes have been correctly combined.
+## Contents
 
-In "Filtering" we filter out the rows where no CountryNL is found. In "Filtering on URL" we create a parquet file only containing rows that contain a URL. We safe this dataframe with URLs to potentially use as a training set for our Machine Learning model later on. To be sure we have one entry per company, we lastly delete all duplicates by keeping the first row of each EntityNumber. 
+### Jupyter Notebooks
 
-In df_final.info we take a look at the attributes of our final URL dataframe. We also print out the first 50 instances to take a closer see what the dataframe looks like. 
+1. `Zip_downloader.ipynb` - Handles the downloading of zipped data files.
+2. `Zip_processor.ipynb` - Manages the extraction and preprocessing of the data.
+3. `Data_Preparation_And_Visualization.ipynb` - Prepares the data for analysis and performs initial visualizations.
+4. `Web_scraper.ipynb` - Collects additional data from the web to complement the dataset.
+5. `Pipeline_ML.ipynb` - Trains and evaluates the machine learning models.
 
-In "Analyse and visualize the final URL dataframe" we take a closer look into the statistics of our URL dataframe. First we print out some numerical statistics such as 'count' and 'unique'. Next, we  examine numerically the top 5 municipalities where the companies (with a filled URL) are located, after which we create a bar plot of the top 10 municipalities and a heatmap to visualize the missing data. Note that these numbers are solely for the dataframe made out of instances with a URL.
-Based on the heatmap, we decide to drop the columns that occur infrequently. 
+### Python Script
 
-In the section "Visualizing duplicate entries in rows," we identify duplicate URLs. The existence of 741 duplicate entries may not necessarily indicate an issue. It's possible that different subsidiaries are referring to the same website. 
+6. `Prediction_pipeline.py` - Serves as the operational pipeline for predictions using the trained models.
 
-Next we look at some statistics for our complete dataset, such as missing data (heatmap) and top 10 municipalities (barplot). Then we save this dataset as a csv as well. 
+# Getting Started
 
-For further analysis of our URL set, later used as training/test set, we take a look at the NACE codes of the companies within the URL data set, to make sure our data is not skewed in favour of any particalur industry/activity. 
+This section guides you through getting set up to use the notebooks and scripts in this repository.
 
-4. DataPreperation.ipynb
+## Prerequisites
+
+Before you begin, make sure you have the following installed:
+- [Anaconda](https://www.anaconda.com/products/distribution) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
+- Git (optional, for cloning the repository)
+
+## Cloning the Repository and Starting Jupyter Notebooks
+
+To get started with the notebooks in this repository, you'll first need to clone it to your local machine. Open a terminal or Anaconda Prompt and follow these steps:
+
+### Cloning the Repository
+
+```shell
+# Clone the repository using git
+git clone [URL to the repository]
+
+# Navigate to the repository directory
+cd https://github.com/nathanvdv/URLfinder
+```
+
+## Environment Setup
+
+Creating a dedicated Conda environment for this project is recommended to avoid dependency conflicts. You can create and activate a new environment using the following commands in your terminal or Anaconda Prompt:
+
+```shell
+# Create a new conda environment named 'kbo-url-linking'
+conda create --name kbo-url-linking python=3.8
+
+# Activate the environment
+conda activate kbo-url-linking
+
+# Install the required packages from requirements.txt
+pip install -r requirements.txt
+```
+
+## Usage Guide for Jupyter Notebooks
+
+This guide provides a step-by-step approach to executing the Jupyter notebooks included in this repository. These notebooks are part of a pipeline developed for linking businesses from the KBO database to their respective URLs.
+
+### General Steps to Run a Notebook:
+
+1. **Open the Notebook**: In your browser, navigate to the notebook file (`.ipynb`) within the Jupyter Notebook interface and click to open it.
+
+2. **Install Dependencies**: Before running the notebook, make sure that all required libraries are installed. These can typically be installed via `pip` or `conda`:
+   ```shell
+   # Use pip
+   pip install [library-name]
+   
+   # Or use conda
+   conda install [library-name]
+    ```
+## Repository Contents
+
+This repository is structured to include a series of Jupyter notebooks and a Python script that are intended to be used sequentially for the development of a model that links businesses from the KBO database to their actual URLs. Below is a brief overview of each file along with placeholders for detailed information.
+
+### Jupyter Notebooks
+
+#### 1. `Zip_downloader.ipynb`
+- **Description**: Downloads zipped data files from the open source dataset of KBO
+- **Instructions**: Ensure you have adequate storage and network bandwidth for the downloads.
+- **Output**: Zipped files saved in the designated directory.
+  
+#### 2. `Zip_processor.ipynb`
+- **Description**: Processes the downloaded zip files, extracting and organizing the data.
+- **Instructions**: Set the input directory to where the zipped files are located. Specify the output directory for extracted content.
+- **Output**: .Parquet data files ready for further processing.
+
+#### 3. `Data_Preparation_And_Visualization.ipynb`
+- **Description**: Prepares data for analysis and visualizes key aspects.
+- **Instructions**: Load the data files output by the Zip_processor.ipynb. Perform necessary data cleaning and visualization.
+- **Output**: Cleaned data set, along with visualizations that may be used for exploratory data analysis.
+
+#### 4. `Web_scraper.ipynb`
+- **Description**: Scrapes urls from the web using Google and/or DuckDuckGo required for the analysis.
+- **Instructions**: Set up the scraping parameters and target URLs. Ensure compliance with the terms of service of the websites being scraped. When scraping with Google, make use of the API.
+- **Output**: Data gathered from web sources, saved and integrated with the main data set.
+
+#### 5. `Pipeline_ML.ipynb`
+- **Description**: Preprocesses the prepared data. Trains machine learning models using the preprocessed data.
+- **Instructions**: Load the cleaned and combined dataset. Select models and parameters for training. Perform cross-validation.
+- **Output**: Trained machine learning models, evaluation metrics, and insights.
+### Python Script
+
+#### 6. `Prediction_pipeline.py`
+- **Description**:  Serves as a pipeline for making predictions with the trained models.
+- **Instructions**: Run this script with Python 3.x. Ensure all dependencies are installed. Load the trained model before making predictions.
+- **Output**: This script can be integrated into a production environment for real-time predictions.
+
+## License
+
+This project is open source and available under the MIT License.
+
