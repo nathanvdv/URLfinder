@@ -48,28 +48,31 @@ def load_data(dataset_query_path, search_results_paths):
     Returns:
     - A merged DataFrame containing all the data.
     """
-    # Load the dataset containing queries and correct URLs
-    dataset_incl_query = pd.read_csv(dataset_query_path)
-    dataset_incl_query.drop(columns=['Unnamed: 0'], inplace=True)  # Drop unnecessary columns
+    try:
+        # Load the dataset containing queries and correct URLs
+        dataset_incl_query = pd.read_csv(dataset_query_path)
+        dataset_incl_query.drop(columns=['Unnamed: 0'], inplace=True)  # Drop unnecessary columns
 
-    # Initialize a DataFrame to hold the merged search results
-    merged_search_results = pd.DataFrame()
+        # Initialize a DataFrame to hold the merged search results
+        merged_search_results = pd.DataFrame()
 
-    # Load and concatenate each search results dataset
-    for path in search_results_paths:
-        search_results = pd.read_csv(path)
+        # Load and concatenate each search results dataset
+        for path in search_results_paths:
+            search_results = pd.read_csv(path)
 
-        if merged_search_results.empty:
-            merged_search_results = search_results
-        else:
-            # Ensure that the DataFrame structures align before concatenating
-            merged_search_results = pd.concat([merged_search_results, search_results], axis=0, ignore_index=True)
+            if merged_search_results.empty:
+                merged_search_results = search_results
+            else:
+                # Ensure that the DataFrame structures align before concatenating
+                merged_search_results = pd.concat([merged_search_results, search_results], axis=0, ignore_index=True)
 
-    # Merge the query dataset with the concatenated search results
-    merged_dataset = pd.merge(dataset_incl_query, merged_search_results, on='EntityNumber', how='left')
+        # Merge the query dataset with the concatenated search results
+        merged_dataset = pd.merge(dataset_incl_query, merged_search_results, on='EntityNumber', how='left')
 
-    return merged_dataset
-
+        return merged_dataset
+    except Exception as e:
+        print("Failed to load data:", e)
+        raise
 
 def get_core_domain(url):
     """Extracts the core registrable domain from a URL using tldextract."""
