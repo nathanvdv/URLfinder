@@ -73,13 +73,13 @@ This guide provides a step-by-step approach to executing the Jupyter notebooks i
 
 1. **Open the Notebook**: In your browser, navigate to the notebook file (`.ipynb`) within the Jupyter Notebook interface and click to open it.
 
-2. **Install Dependencies**: Before running the notebook, make sure that all required libraries are installed. These can typically be installed via `pip` or `conda`:
+2. **Install Dependencies**: Before running the notebook, make sure that all required libraries are installed, these are bundled in the requirement.txt file. These can typically be installed via `pip` or `conda`:
    ```shell
    # Use pip
-   pip install [library-name]
+   pip install -r requirements.txt
    
    # Or use conda
-   conda install [library-name]
+   conda install -r requirements.txt
     ```
 ## Repository Contents
 
