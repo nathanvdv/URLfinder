@@ -149,7 +149,7 @@ def load_and_predict():
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    model = joblib.load('random_forest_model.pkl')
+    model = joblib.load('gradient_boosting_classifier.pkl')
     predictions = model.predict(X_test_scaled)
     
     return predictions, processed_data  # Return processed_data instead of X_test
