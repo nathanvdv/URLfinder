@@ -37,3 +37,6 @@ last_processed_entity.txt
 *.npy
 
 URLBERT-master
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/

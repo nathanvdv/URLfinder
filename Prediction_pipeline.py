@@ -106,7 +106,7 @@ def process_and_scrape_data():
                 'foursquare.com','zaubee.com','be.top10place.com',
                 'restaurantguru.com','www.zimmo.be','guide.michelin.com',
                 'selfcity.be','belgium.worldplaces.me','www.boekhoudkantoren.be',
-                'jaarrekening.be'  # Fill this with actual domains to skip
+                'jaarrekening.be'
     ])
 
     for index, row in df.iterrows():

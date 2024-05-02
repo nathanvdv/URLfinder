@@ -102,7 +102,7 @@ def process_url_data(dataset_query_path, search_results_paths):
         axis=1
         ) # Abbreviation creation if none is given
     
-    # Define the URL columns you are working with, e.g., 'URL', 'URL1', 'URL2', etc.
+    # Define the URL columns you are working with
     url_columns = ['URL'] + [f'URL{i}' for i in range(1, 6)]
     url_columns_without_official =[f'URL{i}' for i in range(1, 6)]
     # Preprocess the domains to extract the core domain
@@ -172,7 +172,6 @@ def process_url_data(dataset_query_path, search_results_paths):
     print('Domains are cleaned and NaN has been filled')
     
     url_columns_without_tld = [f'URL{i}_clean_domain_before_tld' for i in range(1, 6)]
-    # Parallel application of functions
     print('These calculations will loop 4 times:')
     for col in url_columns_without_tld:
         merged_dataset[f'{col}_official_jaccard'] = merged_dataset.apply(
