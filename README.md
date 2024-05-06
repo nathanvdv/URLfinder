@@ -44,7 +44,7 @@ To get started with the notebooks in this repository, you'll first need to clone
 
 ```shell
 # Clone the repository using git
-git clone [URL to the repository]
+git clone https://github.com/nathanvdv/URLfinder
 
 # Navigate to the repository directory
 cd https://github.com/nathanvdv/URLfinder
